@@ -20,10 +20,12 @@ usages()
 	dbg = DebuggerMonitor("CrashTest.exe 1.txt", "log")
 
 	dbg.run()
+	
+	if dbg._faultDetected:
 
-	logdir =  dbg.getLogDir()
+		logdir =  dbg.getLogDir()
 
-	print "Saving Samples in %s"% logdir
+		print "Saving Samples in %s"% logdir
 
 	del(dbg)
 
