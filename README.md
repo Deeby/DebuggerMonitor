@@ -1,10 +1,10 @@
 
-Fuzzing Debugger Monitor v1.0
+#Fuzzing Debugger Monitor v1.0
 
 Watching target's exception and producing the exception context.
 
 
-dependencies:
+##dependencies:
 
 Windbg
 comtypes
@@ -13,7 +13,7 @@ PyDbgEng
 pywin32
 
 
-
+##Usage
 usages()
 {
 
