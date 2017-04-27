@@ -1,6 +1,7 @@
 
 #Fuzzing Debugger Monitor v2.0
-@(dbg|fuzzing)
+
+`dbg` `fuzzing`
 
 **DebugMonitor** is an agent which monitors the  target process when it crashes, 
 and generates exploitable info.
@@ -18,7 +19,7 @@ and generates exploitable info.
 
 ##Usage
 
-- run.py <sample dir> <target path> <timeout>
+- run.py `sample dir` `target path` `timeout`
 
 - **samp dir:** testcase directory
 - **target path:** target process's fullname 
