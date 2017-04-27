@@ -7,18 +7,18 @@
 
 ##dependencies:
 
--Windbg
--comtypes
--psutil
--PyDbgEng
--pywin32
+- Windbg
+- comtypes
+- psutil
+- PyDbgEng
+- pywin32
 
 
 
 ##Usage
 
--run.py <sample dir> <target path> <timeout>
+- run.py <sample dir> <target path> <timeout>
 
--samp dir: testcase directory
--target path: target process's fullname 
--timeout: time to kill the process, 0 means cpukill.
+- samp dir: testcase directory
+- target path: target process's fullname 
+- timeout: time to kill the process, 0 means cpukill.
