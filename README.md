@@ -8,10 +8,10 @@
 ##dependencies:
 
 - Windbg
-- comtypes
-- psutil
-- PyDbgEng
-- pywin32
+- comtypes(Python2.7)
+- psutil(Python2.7)
+- PyDbgEng(Python2.7)
+- pywin32(Python2.7)
 
 
 
