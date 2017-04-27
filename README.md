@@ -1,34 +1,24 @@
 
-#Fuzzing Debugger Monitor v1.0
+#Fuzzing Debugger Monitor v2.0
+@(dbg|fuzzing)
 
-Watching target's exception and producing the exception context.
+**DebugMonitor** is an agent which monitor the  target process when it crashes, and generates exploitable info.
 
 
 ##dependencies:
 
-Windbg
-comtypes
-psutil
-PyDbgEng
-pywin32
+-Windbg
+-comtypes
+-psutil
+-PyDbgEng
+-pywin32
+
 
 
 ##Usage
-``` python
-usages()
-{
 
-	dbg = DebuggerMonitor("CrashTest.exe 1.txt", "log")
+-run.py <sample dir> <target path> <timeout>
 
-	dbg.run()
-	
-	if dbg._faultDetected:
-
-		logdir =  dbg.getLogDir()
-
-		print "Saving Samples in %s"% logdir
-
-	del(dbg)
-
-}
-```
+-samp dir: testcase directory
+-target path: target process's fullname 
+-timeout: time to kill the process, 0 means cpukill.
