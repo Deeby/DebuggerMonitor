@@ -618,11 +618,11 @@ try:
 
 			self.handlingFault = None
 			self.handledFault = None
-
+		def _SetNoCpuKill(self, flag):
+			self.NoCpuKill = flag
 		def _SetTimeOut(self, t):
 			self.TimeOut = t
 		def _StartDebugger(self):
-
 			try:
 				if self.cpu_hq != None:
 					win32pdh.RemoveCounter(self.cpu_counter_handle)
@@ -912,11 +912,12 @@ try:
 	        self._faultPath = faultPath
 	        self._timeout = 1.5
 	        self._faultDetected = False
-	        
-
 	    def setTimeOut(self, t):
 	    	self._timeout = t
 	    	self._debugger._SetTimeOut(t)
+	    def setCpuKill(self, flag):
+	    	self._debugger._SetNoCpuKill(flag);
+
 	    def get_log_dir(self):
 	    	return self._logPath
 	    def __del__(self):
@@ -992,12 +993,10 @@ except Exception, e:
 
 
 if __name__ == "__main__":
-	
-	
-	
+
     while True:
-        dbg = DebuggerMonitor("C:\\TYPSoft FTP Server\\ftpserv.exe", "log")
-        dbg.setTimeOut(-1)
+        dbg = DebuggerMonitor("mspaint.exe", "log")
+        dbg.setCpuKill(True)
         dbg.run()
         if dbg._faultDetected:
                 logdir =  dbg.get_log_dir()
