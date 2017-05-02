@@ -22,11 +22,13 @@ and generates exploitable info.
 - run.py `sample_dir` `target_path` `timeout`
 
 - **samp_dir:** testcase directory
-- **target_path:** target process's fullname 
+- **target_path:** target process's fullname. We didn't  consider the process with args. If target has args, it is easy to add codes in **run.py**.
 - **timeout:** time to kill the process, 0 means cpukill.
 
 
 ## CHANGELOG
 
-- 2017.4.28 Add CPUKill that automatically kill target process
-- 2017.5.2  Add "!exchain" dbgcontrol command ouput
+- 2017.5.2  Add "!exchain" dbgcontrol command ouput.
+- 2017.4.28 Add CPUKill that automatically kill target process.
+- 2016.xx.xx *DebugMonitor* published.
+
