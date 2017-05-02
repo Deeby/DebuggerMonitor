@@ -19,10 +19,10 @@ and generates exploitable info.
 
 ## Usage
 
-- run.py `sample dir` `target path` `timeout`
+- run.py `sample_dir` `target_path` `timeout`
 
-- **samp dir:** testcase directory
-- **target path:** target process's fullname 
+- **samp_dir:** testcase directory
+- **target_path:** target process's fullname 
 - **timeout:** time to kill the process, 0 means cpukill.
 
 
