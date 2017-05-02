@@ -213,6 +213,10 @@ try:
 											   c_char_p("kb"),
 											   DbgEng.DEBUG_EXECUTE_ECHO)
 					self.buff += "\n\n"
+					dbg.idebug_control.Execute(DbgEng.DEBUG_OUTCTL_THIS_CLIENT,
+											   c_char_p("!exchain"),
+											   DbgEng.DEBUG_EXECUTE_ECHO)
+					self.buff += "\n\n"
 
 				else:
 					_DbgEventHandler.TakeStackTrace = True
@@ -994,8 +998,8 @@ except Exception, e:
 
 if __name__ == "__main__":
 
-    while True:
-        dbg = DebuggerMonitor("mspaint.exe", "log")
+    if True:
+        dbg = DebuggerMonitor("CrashTest.exe", "log")
         dbg.setCpuKill(True)
         dbg.run()
         if dbg._faultDetected:

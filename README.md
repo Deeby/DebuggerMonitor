@@ -24,3 +24,9 @@ and generates exploitable info.
 - **samp dir:** testcase directory
 - **target path:** target process's fullname 
 - **timeout:** time to kill the process, 0 means cpukill.
+
+
+##CHANGELOG
+
+- 2017.4.28 Add CPUKill that automatically kill target process
+- 2017.5.2  Add "!exchain" dbgcontrol command ouput
