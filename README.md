@@ -7,7 +7,7 @@
 and generates exploitable info.
 
 
-## dependencies:
+## Dependencies
 
 - Windbg
 - comtypes(Python2.7)
