@@ -1,5 +1,5 @@
 
-#Fuzzing Debugger Monitor v2.0
+# Fuzzing Debugger Monitor v2.0
 
 `dbg` `fuzzing`
 
@@ -7,7 +7,7 @@
 and generates exploitable info.
 
 
-##dependencies:
+## dependencies:
 
 - Windbg
 - comtypes(Python2.7)
@@ -17,7 +17,7 @@ and generates exploitable info.
 
 
 
-##Usage
+## Usage
 
 - run.py `sample dir` `target path` `timeout`
 
@@ -26,7 +26,7 @@ and generates exploitable info.
 - **timeout:** time to kill the process, 0 means cpukill.
 
 
-##CHANGELOG
+## CHANGELOG
 
 - 2017.4.28 Add CPUKill that automatically kill target process
 - 2017.5.2  Add "!exchain" dbgcontrol command ouput
