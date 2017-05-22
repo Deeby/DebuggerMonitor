@@ -41,7 +41,8 @@ from psutil.error import NoSuchProcess
 import struct, sys, time, os, re, pickle
 import gc, tempfile
 
-
+global g_targetPID
+g_targetPID = 0
 try:
 
 	import comtypes
@@ -123,7 +124,9 @@ try:
 				match = re.search(r"\.\s+\d+\s+id:\s+([0-9a-fA-F]+)\s+\w+\s+name:\s", self.buff)
 				if match != None:
 					self.pid = int(match.group(1), 16)
-
+					global g_targetPID
+					#g_targetPID = self.pid
+					#print "[*] DEBUG PROCESS ID : ", self.pid
 					# Write out PID for main peach process
 					fd = open(self.TempfilePid, "wb+")
 					fd.write(str(self.pid))
@@ -625,6 +628,7 @@ try:
 		def _SetNoCpuKill(self, flag):
 			self.NoCpuKill = flag
 		def _SetTimeOut(self, t):
+			self.NoCpuKill= True
 			self.TimeOut = t
 		def _StartDebugger(self):
 			try:
@@ -695,14 +699,51 @@ try:
 
 					time.sleep(0.1)
 
-			if not self.NoCpuKill:
+			if self.NoCpuKill:
 				# Make sure we wait at least 1 second
 				# for program to startup.  Needed with new
 				# CPU killing k0de.
+				#print 11111111111
 				time.sleep(self.TimeOut)
+			else:
+				#print 111111
+				count = 10000
+				while True:
+					#print 2222222
+					count -= 1
+					if count <= 1:
+						break
+					try:
+						with open(self.tempfilepid, "rb+") as fd:
+							pid = fd.read()
+							self.pid = int(pid)
+							#print "[*] DEBUG PROCESS ID : ", self.pid
+						try:
+							#print "delete tmpfileid"
+							os.remove(self.tempfilepid)
+							os.unlink(self.tempfilepid)
+							break
+						except:
+							pass
+						break
+					except:
+						pass
+				if self.pid != None:
+					try:
+						#Wprint 111111
+					    # Check and see if the CPU utalization is low
+						cpu = psutil.Process(self.pid).get_cpu_percent(interval=1.0)
 
+						if cpu != None and cpu < 1.0:
+							cpu = psutil.Process(self.pid).get_cpu_percent(interval=1.0)
+							if cpu != None and cpu < 1.0 and not self.quit.is_set():
+								#print "PublisherCall: Stopping debugger, CPU:", cpu
+								self._StopDebugger()
+								return
+					except NoSuchProcess, e:
+						print e
+						pass
 		def _StopDebugger(self, force = False):
-
 			if force == False and self.handledFault != None and (self.handlingFault.is_set() and not self.handledFault.is_set()):
 				print "_StopDebugger(): Not killing process due to fault handling"
 				return
@@ -710,6 +751,7 @@ try:
 			#print "_StopDebugger() - force:", force
 
 			if self.thread != None and self.thread.is_alive():
+				#print 222222
 				self.quit.set()
 				self.started.clear()
 
@@ -720,7 +762,7 @@ try:
 					return
 
 				if self.thread.is_alive():
-
+					#print 444444
 					# 1. Terminate child process
 					if self.pid != None:
 						psutil.Process(self.pid).terminate()
@@ -753,7 +795,7 @@ try:
 				self._StopDebugger()
 
 		def PublisherCall(self, method):
-
+			#print 222222222222222
 			if not self.StartOnCall:
 				return None
 
@@ -771,6 +813,8 @@ try:
 					if self.pid == None:
 						fd = open(self.tempfilepid, "rb+")
 						pid = fd.read()
+						#with open("debug1111.log", "w") as f2:
+ 						#	f2.write(pid)
 						fd.close()
 
 						if len(pid) != 0:
@@ -785,6 +829,7 @@ try:
 						try:
 							# Check and see if the CPU utalization is low
 							cpu = psutil.Process(self.pid).get_cpu_percent(interval=1.0)
+							#print cpu
 							if cpu != None and cpu < 1.0:
 								cpu = psutil.Process(self.pid).get_cpu_percent(interval=1.0)
 								if cpu != None and cpu < 1.0 and not self.quit.is_set():
@@ -920,13 +965,15 @@ try:
 	    	self._timeout = t
 	    	self._debugger._SetTimeOut(t)
 	    def setCpuKill(self, flag):
-	    	self._debugger._SetNoCpuKill(flag);
+	    	self._debugger._SetNoCpuKill(not flag);
 
 	    def get_log_dir(self):
 	    	return self._logPath
 	    def __del__(self):
 	    	self._debugger._StopDebugger()
 	    def run(self):
+	        if os.path.exists("debugger.TMPPID"):
+	            os.remove("debugger.TMPPID")
 	        self._faultDetected = False
 	        self._debugger._StartDebugger()
 	        if self._debugger.DetectedFault():
@@ -999,8 +1046,9 @@ except Exception, e:
 if __name__ == "__main__":
 
     if True:
-        dbg = DebuggerMonitor("CrashTest.exe", "log")
-        dbg.setCpuKill(True)
+        dbg = DebuggerMonitor("notepad.exe", "log")
+        #dbg.setCpuKill(True)
+        #dbg.setTimeOut(6)
         dbg.run()
         if dbg._faultDetected:
                 logdir =  dbg.get_log_dir()
