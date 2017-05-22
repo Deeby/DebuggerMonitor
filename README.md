@@ -27,7 +27,7 @@ and generates exploitable info.
 
 
 ## CHANGELOG
-
+- 2017.5.22 Fix some bugs
 - 2017.5.2  Add "!exchain" dbgcontrol command ouput.
 - 2017.4.28 Add CPUKill that automatically kill target process.
 - 2016.xx.xx *DebugMonitor* published.
